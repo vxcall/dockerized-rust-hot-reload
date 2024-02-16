@@ -1,0 +1,27 @@
+ARG RUST_VERSION=1.76.0
+ARG APP_NAME=server
+
+FROM rust:${RUST_VERSION} AS dev
+
+# Use apt-get to update and install packages
+RUN apt-get update && apt-get install -y \
+    clang \
+    git
+
+RUN cargo install cargo-watch
+
+RUN rustup component add rustfmt
+
+RUN git clone https://github.com/rui314/mold.git \
+  && mkdir /mold/build \
+  && cd /mold/build \
+  && git checkout v2.4.0 \
+  && ../install-build-deps.sh \
+  && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=/usr/bin/c++ .. \
+  && cmake --build . -j $(nproc) \
+  && cmake --install .
+
+WORKDIR /app
+
+COPY ./src ./src
+COPY Cargo.toml Cargo.lock ./
