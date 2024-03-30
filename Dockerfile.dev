@@ -5,21 +5,18 @@ FROM rust:${RUST_VERSION} AS dev
 
 # Use apt-get to update and install packages
 RUN apt-get update && apt-get install -y \
-    clang \
-    git
+    clang
 
 RUN cargo install cargo-watch
 
 RUN rustup component add rustfmt
 
-RUN git clone https://github.com/rui314/mold.git \
-  && mkdir /mold/build \
-  && cd /mold/build \
-  && git checkout v2.4.0 \
-  && ../install-build-deps.sh \
-  && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=/usr/bin/c++ .. \
-  && cmake --build . -j $(nproc) \
-  && cmake --install .
+RUN curl -L https://github.com/rui314/mold/releases/download/v2.30.0/mold-2.30.0-x86_64-linux.tar.gz -o mold-2.30.0-x86_64-linux.tar.gz \
+    && tar -zxvf mold-2.30.0-x86_64-linux.tar.gz \
+    && cd mold-2.30.0-x86_64-linux \
+    && cp -r bin/* /usr/local/bin/ \
+    && cp -r lib/* /usr/local/lib/ \
+    && ldconfig
 
 WORKDIR /app
 

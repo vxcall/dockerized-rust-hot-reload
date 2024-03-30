@@ -6,11 +6,18 @@ run following to experience how fast it is.
 
 ```shell
 docker compose up --build -d
+docker compose logs -f
 ```
 
-then access `localhost:8080/api/jobs` to see the initial content.
+then access 
 
-change arbitrally Rust code like
+```shell
+localhost:8080/api/jobs
+```
+
+to see the initial content.
+
+after that, change arbitrally Rust code like
 
 ```rs
 fn jobs() -> &'static str {
