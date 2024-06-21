@@ -1,6 +1,6 @@
 # :fire: dockerized-rust-hot-reload
 best practice of HOT reloading dockerized rust code.
-U can reach to [my tiny blog post](https://pseuxide.github.io/posts/turbocharging_rust_achieve_lightning_fast_hot_reloading_with_docker_and_mold/) about this.
+U can reach to [my tiny blog post](https://vxcall.github.io/posts/turbocharging_rust_achieve_lightning_fast_hot_reloading_with_docker_and_mold/) about this.
 
 run following to experience how fast it is.
 
